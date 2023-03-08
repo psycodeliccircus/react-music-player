@@ -87,7 +87,11 @@ export default function Player({
             capHeight={2}
             meterWidth={6}
             meterCount={442}
-            meterColor={[{ stop: 1, color: "#1100ff" }]}
+            meterColor={[
+              { stop: 0, color: "#002266" },
+              { stop: 0.5, color: "#0044cc" },
+              { stop: 1, color: "#001d57" },
+            ]}
             gap={7}
           />
         </div>
