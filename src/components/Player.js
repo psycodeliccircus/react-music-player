@@ -74,7 +74,7 @@ export default function Player({
         onLoadedMetadata={handleAudioLoaded}
       ></audio>
 
-      {isLoading && <div className="loading-indicator">Carregando...</div>}
+      {isLoading && <div className="loading-indicator spinner"></div>}
 
       <div className="player-card">
         <div className="audio-waveform">
