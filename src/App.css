@@ -198,3 +198,15 @@
     height: 110px;
   }
 }
+
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background-color: #353535;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: #555;
+}
