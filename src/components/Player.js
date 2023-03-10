@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from "react";
-import AudioSpectrum from "react-audio-spectrum";
+import AudioWaveform from "./AudioWaveform";
 import {
   BiPlayCircle,
   BiPauseCircle,
@@ -54,6 +54,20 @@ export default function Player({
     }
   }, [isPlaying, currentIndex]);
 
+  useEffect(() => {
+    const audioElement = audioRef.current;
+
+    const handleAudioEnded = () => {
+      nextSong();
+    };
+
+    audioElement.addEventListener("ended", handleAudioEnded);
+
+    return () => {
+      audioElement.removeEventListener("ended", handleAudioEnded);
+    };
+  }, [isPlaying, currentIndex, nextSong]);
+
   const [isLoading, setIsLoading] = useState(true);
 
   const handleAudioLoaded = (event) => {
@@ -72,29 +86,13 @@ export default function Player({
         src={currentSong.music}
         volume={volume}
         onLoadedMetadata={handleAudioLoaded}
+        onEnded={nextSong}
       ></audio>
 
       {isLoading && <div className="loading-indicator spinner"></div>}
 
       <div className="player-card">
-        <div className="audio-waveform">
-          <AudioSpectrum
-            id="audio-canvas"
-            height={110}
-            width={442}
-            audioId={"audio-element"}
-            capColor={"#ffffff"}
-            capHeight={2}
-            meterWidth={6}
-            meterCount={442}
-            meterColor={[
-              { stop: 0, color: "#002266" },
-              { stop: 0.5, color: "#0044cc" },
-              { stop: 1, color: "#001d57" },
-            ]}
-            gap={7}
-          />
-        </div>
+        <AudioWaveform />
 
         <h2 className="activeSong-name">{currentSong.name}</h2>
         <h4 className="activeArtist-name">{currentSong.creator}</h4>
