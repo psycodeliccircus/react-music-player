@@ -192,7 +192,8 @@
   font-size: 14px;
   margin-right: 10px;
   color: white;
-  width: 126px;
+  width: 148px;
+  text-align: right;
 }
 
 .song-range-slider {
@@ -211,6 +212,12 @@
   border-radius: 5px;
   outline: none;
   cursor: pointer;
+  transition: background-color 0.2s ease-in-out;
+}
+
+.song-range-slider input[type="range"]::-webkit-slider-runnable-track {
+  background-color: #ccc;
+  border-radius: 5px;
 }
 
 .song-range-slider input[type="range"]::-webkit-slider-thumb {
@@ -221,15 +228,45 @@
   background-color: #000;
   border: 2px solid #fff;
   cursor: pointer;
-  transition: transform 0.2s ease-in-out;
+  transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3);
 }
 
-.song-range-slider input[type="range"]:hover::-webkit-slider-thumb {
-  transform: scale(1.2);
+.song-range-slider input[type="range"]::-moz-range-thumb {
+  background-color: #000;
+  border: 2px solid #fff;
+  border-radius: 50%;
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+  transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3);
 }
 
-.song-range-slider input[type="range"]:active::-webkit-slider-thumb {
+.song-range-slider input[type="range"]:active::-webkit-slider-thumb,
+.song-range-slider input[type="range"]:active::-moz-range-thumb {
   transform: scale(1.4);
+  background-color: #000;
+}
+
+.song-range-slider input[type="range"]:active::-webkit-slider-runnable-track,
+.song-range-slider input[type="range"]:active::-moz-range-track {
+  background-color: #000;
+}
+
+.song-range-slider input[type="range"]:hover::-webkit-slider-thumb,
+.song-range-slider input[type="range"]:hover::-moz-range-thumb {
+  transform: scale(1.2);
+  background-color: #000;
+}
+
+.song-range-slider input[type="range"]:hover::-webkit-slider-runnable-track,
+.song-range-slider input[type="range"]:hover::-moz-range-track {
+  background-color: #ccc;
+}
+
+.song-range-slider input[type="range"]::-moz-range-progress {
+  background-color: #000;
 }
 
 .time-display {
