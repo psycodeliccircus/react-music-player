@@ -8,12 +8,7 @@ import {
   BiVolumeFull,
 } from "react-icons/bi";
 
-export default function Player({
-  currentSong,
-  currentIndex,
-  nextSong,
-  prevSong,
-}) {
+function useAudioPlayer(currentSong, currentIndex, nextSong, prevSong) {
   const [isPlaying, setIsPlaying] = useState(false);
   const storedVolume = localStorage.getItem("volume");
   const defaultVolume = 0.2;
@@ -78,8 +73,64 @@ export default function Player({
     setIsLoading(true);
   }, [currentSong]);
 
+  return {
+    isPlaying,
+    togglePlay,
+    volume,
+    handleVolumeChange,
+    isVolumeChanged,
+    audioRef,
+    isLoading,
+    handleAudioLoaded,
+  };
+}
+
+export default function Player({
+  currentSong,
+  currentIndex,
+  nextSong,
+  prevSong,
+}) {
+  const {
+    isPlaying,
+    togglePlay,
+    volume,
+    handleVolumeChange,
+    isVolumeChanged,
+    audioRef,
+    isLoading,
+    handleAudioLoaded,
+  } = useAudioPlayer(currentSong, currentIndex, nextSong, prevSong);
+
+  const [currentTime, setCurrentTime] = useState(0);
+  const [duration, setDuration] = useState(0);
+
+  const handleTimeUpdate = (event) => {
+    setCurrentTime(event.target.currentTime);
+    setDuration(event.target.duration);
+  };
+
+  const handleKeyDown = (event) => {
+    switch (event.key) {
+      case " ":
+        event.preventDefault();
+        togglePlay();
+        break;
+      case "ArrowLeft":
+        event.preventDefault();
+        prevSong();
+        break;
+      case "ArrowRight":
+        event.preventDefault();
+        nextSong();
+        break;
+      default:
+        break;
+    }
+  };
+
   return (
-    <div>
+    <div onKeyDown={handleKeyDown}>
       <audio
         ref={audioRef}
         id="audio-element"
@@ -87,6 +138,7 @@ export default function Player({
         volume={volume}
         onLoadedMetadata={handleAudioLoaded}
         onEnded={nextSong}
+        onTimeUpdate={handleTimeUpdate}
       ></audio>
 
       {isLoading && <div className="loading-indicator spinner"></div>}
@@ -98,6 +150,22 @@ export default function Player({
         <h4 className="activeArtist-name">{currentSong.creator}</h4>
 
         <div className="control-icon">
+          <div className="song-timeline">
+            <div className="time-display">
+              {currentTime.toFixed(0)} / {duration.toFixed(0)}
+            </div>
+            <input
+              type="range"
+              min={0}
+              max={duration}
+              step="any"
+              value={currentTime}
+              className="song-range-slider"
+              onChange={(event) =>
+                (audioRef.current.currentTime = event.target.value)
+              }
+            />
+          </div>
           <BiSkipPreviousCircle
             color="white"
             className="icons"
@@ -129,21 +197,21 @@ export default function Player({
           />
 
           {isVolumeChanged ? (
-            <BiVolumeFull color="#1100ff" className="icons-volume" size={30} />
+            <BiVolumeFull color="#1100ff" className="icons" size={50} />
           ) : (
-            <BiVolumeFull color="white" className="icons-volume" size={30} />
+            ""
           )}
-          <div className="volume-control">
-            <input
-              type="range"
-              min="0"
-              max="1"
-              step="0.1"
-              value={volume}
-              onChange={handleVolumeChange}
-              onBlur={() => setIsVolumeChanged(false)}
-            />
-          </div>
+
+          <input
+            type="range"
+            min={0}
+            max={1}
+            step="any"
+            value={volume}
+            className="volume-slider"
+            onChange={handleVolumeChange}
+            style={{ display: isVolumeChanged ? "" : "none" }}
+          />
         </div>
       </div>
     </div>
