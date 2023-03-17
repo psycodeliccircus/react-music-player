@@ -104,10 +104,34 @@ export default function Player({
 
   const [currentTime, setCurrentTime] = useState(0);
   const [duration, setDuration] = useState(0);
+  const [currentTime1, setCurrentTime1] = useState(0);
+  const [duration1, setDuration1] = useState(0);
 
   const handleTimeUpdate = (event) => {
-    setCurrentTime(event.target.currentTime);
-    setDuration(event.target.duration);
+    setCurrentTime1(event.target.currentTime);
+    setDuration1(event.target.duration);
+
+    // Obter o tempo atual e a duração total do elemento de áudio ou vídeo
+    const currentTime = event.target.currentTime;
+    const duration = event.target.duration;
+
+    // Converter o tempo atual e a duração total em minutos e segundos
+    const currentMinutes = Math.floor(currentTime / 60);
+    const currentSeconds = Math.floor(currentTime % 60);
+    const durationMinutes = Math.floor(duration / 60);
+    const durationSeconds = Math.floor(duration % 60);
+
+    // Formatar o tempo atual e a duração total no formato 00:00
+    const currentTimeFormatted = `${currentMinutes
+      .toString()
+      .padStart(2, "0")}:${currentSeconds.toString().padStart(2, "0")}`;
+    const durationFormatted = `${durationMinutes
+      .toString()
+      .padStart(2, "0")}:${durationSeconds.toString().padStart(2, "0")}`;
+
+    // Atualizar os estados com o tempo atual e a duração total formatados
+    setCurrentTime(currentTimeFormatted);
+    setDuration(durationFormatted);
   };
 
   const handleKeyDown = (event) => {
@@ -152,14 +176,14 @@ export default function Player({
         <div className="control-icon">
           <div className="song-timeline">
             <div className="time-display">
-              {currentTime.toFixed(0)} / {duration.toFixed(0)}
+              {currentTime} / {duration}
             </div>
             <input
               type="range"
               min={0}
-              max={duration}
+              max={duration1.toFixed(0)}
               step="any"
-              value={currentTime}
+              value={currentTime1.toFixed(0)}
               className="song-range-slider"
               onChange={(event) =>
                 (audioRef.current.currentTime = event.target.value)

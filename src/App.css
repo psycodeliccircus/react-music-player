@@ -185,38 +185,57 @@
   align-items: center;
   margin-top: 88px;
   margin-right: -114px;
-  margin-left: 54px;
+  margin-left: -14px;
 }
 
 .time-display {
   font-size: 14px;
-  margin-right: -32px;
+  margin-right: 10px;
   color: white;
-  width: 84px;
+  width: 126px;
 }
 
 .song-range-slider {
-  box-shadow: 0px 0px 56px -5px rgba(25, 25, 252, 0.75);
-  -webkit-box-shadow: 0px 0px 56px -5px rgba(25, 25, 252, 0.75);
-  -moz-box-shadow: 0px 0px 56px -5px rgba(25, 25, 252, 0.75);
-  border-radius: 50%;
+  width: 80%;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
 }
 
 .song-range-slider input[type="range"] {
   width: 100%;
-  margin: 0 -2px;
+  margin: 0;
+  height: 8px;
   -webkit-appearance: none;
-  background-color: #fff;
-  border-radius: 10px;
+  background-color: #f2f2f2;
+  border-radius: 5px;
+  outline: none;
+  cursor: pointer;
 }
 
 .song-range-slider input[type="range"]::-webkit-slider-thumb {
   -webkit-appearance: none;
-  width: 16px;
-  height: 16px;
+  width: 20px;
+  height: 20px;
   border-radius: 50%;
-  background-color: #fff;
+  background-color: #000;
+  border: 2px solid #fff;
   cursor: pointer;
+  transition: transform 0.2s ease-in-out;
+}
+
+.song-range-slider input[type="range"]:hover::-webkit-slider-thumb {
+  transform: scale(1.2);
+}
+
+.song-range-slider input[type="range"]:active::-webkit-slider-thumb {
+  transform: scale(1.4);
+}
+
+.time-display {
+  font-size: 14px;
+  text-align: right;
+  margin-top: auto;
 }
 
 @media only screen and (max-width: 768px) {
