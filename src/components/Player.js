@@ -102,8 +102,8 @@ export default function Player({
     handleAudioLoaded,
   } = useAudioPlayer(currentSong, currentIndex, nextSong, prevSong);
 
-  const [currentTime, setCurrentTime] = useState(0);
-  const [duration, setDuration] = useState(0);
+  const [currentTime, setCurrentTime] = useState('00:00');
+  const [duration, setDuration] = useState('00:00');
   const [currentTime1, setCurrentTime1] = useState(0);
   const [duration1, setDuration1] = useState(0);
 
@@ -176,7 +176,7 @@ export default function Player({
         <div className="control-icon">
           <div className="song-timeline">
             <div className="time-display">
-              {currentTime} / {duration}
+              {currentTime} | {duration}
             </div>
             <input
               type="range"
